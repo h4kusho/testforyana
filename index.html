@@ -217,7 +217,7 @@ input[type="range"]::-moz-range-thumb { width: 28px; height: 28px; border-radius
     <div class="track"><div class="fill" id="fill"></div></div>
   </header>
   <div id="stage"></div>
-  <p class="foot">Сделано одним человеком для одного человека.</p>
+  <p class="foot">Сделано для нас двоих — даже если между нами километры.</p>
 </main>
 <canvas id="fx" aria-hidden="true"></canvas>
 
@@ -226,27 +226,26 @@ input[type="range"]::-moz-range-thumb { width: 28px; height: 28px; border-radius
   /* Здесь можно поменять тексты, купоны и письмо на свои. */
   var CONFIG = {
     coupons: [
-      'Массаж плеч, 15 минут без пауз',
+      'Массаж плеч каждый вечер',
       'Ты выбираешь фильм, я не спорю',
-      'Посуда вечером на мне'
+      'Я заказываю тебе любимую вкусняшку с доставкой'
     ],
     prizes: [
-      { short: 'Обнимашки без лимита', full: 'Обнимашки без лимита, действуют всегда' },
-      { short: 'Ужин по твоему выбору', full: 'Ужин в любом месте, которое выберешь ты' },
-      { short: 'Любое желание', full: 'Одно любое желание (в разумных пределах)' }
+      { short: 'Неделю играю для тебя на саппорте', full: 'Неделю играю для тебя на саппорте' },
+      { short: 'Любое желание', full: 'Одно любое желание (в разумных пределах)' },
+      { short: 'Вечер по твоим правилам', full: 'Один вечер полностью по твоему сценарию — ты выбираешь, чем мы займёмся' }
     ],
-    finalQuestion: 'Пойдёшь со мной на свидание в эти выходные?',
     letter: [
       'Я сделал этот тест, потому что обычных слов мне мало.',
-      'С тобой даже скучные дела превращаются в хорошие воспоминания. Спасибо, что ты рядом, {name}.',
-      'Это самый удачный ответ в моей жизни.'
+      'Даже на расстоянии ты умеешь делать мои дни лучше. Спасибо, что ты рядом, {name}.',
+      'Расстояние — это просто километры. Мне важно, что мы выбираем друг друга.'
     ],
     secretLine: 'Ты поймала все сердечки. Значит, моё тоже у тебя.'
   };
 
   var QUESTIONS = [
     { type: 'choice', tag: 'Первое впечатление', q: 'Я пишу тебе: «Нам надо поговорить». Что ты делаешь?',
-      opts: [['Придумываю сорок сценариев за минуту', 'b'], ['Отвечаю: «Ты принёс еду?»', 'c'], ['Пишу «рассказывай» и достаю плед', 'a']],
+      opts: [['Готовлюсь к очередному концерту', 'b'], ['Наливаю кофе и ожидаю кучу новых сплетен', 'c'], ['Ложусь в кроватку и мы обсуждаем весь прошедший день', 'a']],
       react: 'Записал. На самом деле я просто хотел сказать, что ты классная.' },
     { type: 'choice', tag: 'Вопрос с подвохом', q: 'Кто в этой паре красивее?',
       opts: [['Ты', 'a'], ['Ты', 'a'], ['Определённо ты', 'a'], ['Все варианты верны', 'a']],
@@ -257,12 +256,12 @@ input[type="range"]::-moz-range-thumb { width: 28px; height: 28px; border-radius
       cap: 'Выбор невелик.', gone: 'Кнопка «Нет» уволилась. Ей не место в наших отношениях.',
       react: 'Так и знал. Ответ сохранён навсегда.' },
     { type: 'choice', tag: 'Суперсилы', q: 'Какая у нас суперсила как у пары?',
-      opts: [['Находить еду в два часа ночи', 'c'], ['Понимать друг друга без слов', 'a'], ['Превращать любую поездку в приключение', 'b'], ['Смеяться над тем, что больше никому не смешно', 'c']],
+      opts: [['Кидать друг другу лучшие тиктоки в 4 часа ночи', 'c'], ['Понимать друг друга даже по одному сообщению', 'a'], ['Превращать обычный день в лучшее времяпровождение', 'b'], ['Смеяться над тем, что больше никому не смешно', 'c']],
       react: 'Согласен. Нас лучше не недооценивать.' },
     { type: 'game', tag: 'Мини-игра' },
     { type: 'choice', tag: 'Планы', q: 'Идеальная пятница у нас такая:',
-      opts: [['Плед, кино и еда с доставкой', 'a'], ['Сесть в машину и ехать куда глаза глядят', 'b'], ['Мемы до утра и «ещё одна серия»', 'c'], ['Готовим вместе и немного поджигаем кухню', 'b']],
-      react: 'Отличный план. Мы его реально сделаем.' },
+      opts: [['Одновременно включить фильм, взять любимую еду и смотреть вместе онлайн', 'a'], ['Весь день играть в доту', 'b'], ['Сидеть до утра за просмотром сериала', 'c'], ['Обсуждать всё подряд и не заметить, как пролетело время', 'b']],
+      react: 'Отличный план. Главное — провести время вместе.' },
     { type: 'choice', tag: 'Экстрим', q: 'Зомби-апокалипсис. Кто кого спасает?',
       opts: [['Я тебя, конечно', 'b'], ['Ты меня, а я держу фонарик', 'c'], ['По очереди, чтобы никому не обидно', 'a'], ['Открываем магазин сладостей на руинах', 'c']],
       react: 'С тобой я бы выжил. Или хотя бы вкусно поел.' },
@@ -299,9 +298,12 @@ input[type="range"]::-moz-range-thumb { width: 28px; height: 28px; border-radius
   function shuffle(a) { for (var i = a.length - 1; i > 0; i--) { var j = Math.floor(Math.random() * (i + 1)); var t = a[i]; a[i] = a[j]; a[j] = t; } return a; }
 
   function after(i, text) {
-    $('after').innerHTML = '<p class="react">' + esc(fillName(text)) + '</p><button class="btn primary" id="next">' + (i === N - 1 ? 'Узнать результат' : 'Дальше') + '</button>';
-    $('next').onclick = function () { finish(i); };
-    $('next').focus({ preventScroll: true });
+    var target = $('after');
+    if (!target) return;
+    target.innerHTML = '<p class="react">' + esc(fillName(text)) + '</p><button class="btn primary" id="next">' + (i === N - 1 ? 'Узнать результат' : 'Дальше') + '</button>';
+    var next = $('next');
+    next.onclick = function () { finish(i); };
+    next.focus({ preventScroll: true });
   }
   function finish(i) { setProgress(Math.round((i + 1) / N * 90)); showStep(i + 1); }
 
@@ -311,7 +313,7 @@ input[type="range"]::-moz-range-thumb { width: 28px; height: 28px; border-radius
     mount('<section class="ticket enter hero">' +
       '<span class="seal">Проверено любовью</span>' +
       '<h1>Тест<br>на <span class="mark">нас</span></h1>' +
-      '<p class="lead">9 вопросов, одна мини-игра и подарки в конце. Отвечай как хочешь: система уже знает правильные ответы.</p>' +
+      '<p class="lead">9 вопросов, одна мини-игра и онлайн-сюрпризы в конце. Проходи откуда угодно — главное, чтобы у нас была связь.</p>' +
       '<label class="field" for="name">Как тебя зовут?</label>' +
       '<input id="name" type="text" autocomplete="off" maxlength="24" placeholder="Напиши имя">' +
       '<button class="btn primary" id="start">Начать тест</button></section>');
@@ -434,7 +436,7 @@ input[type="range"]::-moz-range-thumb { width: 28px; height: 28px; border-radius
       over = true; clearInterval(spawn); clearInterval(tick);
       Array.prototype.forEach.call(arena.querySelectorAll('.h'), function (h) { h.remove(); });
       state.hearts = got; state.secret = got >= GOAL;
-      after(i, got >= GOAL ? 'Все семь. Ты поймала моё сердце ещё и официально.' : 'Поймано ' + got + ' из ' + GOAL + '. Остальные я отдам просто так.');
+      after(i, got >= GOAL ? 'Все семь. Ты поймала моё сердце ещё и официально.' : 'Поймано ' + got + ' из ' + GOAL + '. Остальные сердечки отправлю тебе сообщением.');
     }
     go.onclick = function () {
       go.hidden = true;
@@ -446,7 +448,7 @@ input[type="range"]::-moz-range-thumb { width: 28px; height: 28px; border-radius
 
   /* Карты судьбы */
   function renderCards(i, q) {
-    var order = shuffle([0, 1, 2]);
+    var order = shuffle(CONFIG.prizes.map(function (_, index) { return index; }));
     mount(qTicket(i, '<h2 class="q">Выбери карту судьбы</h2>' +
       '<p class="hint">Одна карта твоя. Остальные покажу, чтобы ты знала, что могла выбрать.</p><div class="cards">' +
       order.map(function (p, k) {
@@ -461,7 +463,7 @@ input[type="range"]::-moz-range-thumb { width: 28px; height: 28px; border-radius
         setTimeout(function () {
           cards.forEach(function (x) { if (x !== c) { x.classList.add('open', 'dim'); } });
         }, 900);
-        setTimeout(function () { after(i, 'Карта выбрана. Приз уже лежит в твоих купонах.'); }, 1900);
+        setTimeout(function () { after(i, 'Карта выбрана. Приз уже лежит в твоих купонах.'); }, 1100);
       };
     });
   }
@@ -498,40 +500,45 @@ input[type="range"]::-moz-range-thumb { width: 28px; height: 28px; border-radius
       '<p class="eyebrow">Ваш тип пары, ' + esc(nm()) + '</p>' +
       '<h2 class="q big">' + esc(type.title) + '</h2><p class="desc">' + esc(type.desc) + '</p>' +
       '<div class="meters">' + rows.map(function (r) {
-        return '<div class="mrow"><div class="mrow-top"><span>' + r[0] + '</span><b>' + r[1] + '%</b></div><div class="track"><div class="mfill" data-w="' + r[1] + '"></div></div></div>';
+        return '<div class="mrow"><div class="mrow-top"><span>' + r[0] + '</span><b>∞</b></div><div class="track"><div class="mfill" data-w="100"></div></div></div>';
       }).join('') + '</div>' +
       '<p class="total">Общая совместимость: 100%. Шкала сломалась, пришлось выдать больше.</p></section>' +
       '<section class="ticket enter"><div class="stub"><span>Твои купоны</span><span>' + coupons.length + ' шт.</span></div>' +
-      '<p class="hint" style="margin-top:0">Нажми на купон, чтобы активировать. Предъявлять лично.</p>' +
+      '<p class="hint" style="margin-top:0">Нажми на купон, чтобы отметить его. Потом отправь мне скриншот или напиши в чат — договоримся, когда исполнить.</p>' +
       coupons.map(function (c) {
         return '<div class="coupon"><span class="ct">' + esc(c) + '</span><button class="btn ghost">Активировать</button></div>';
       }).join('') +
-      '<button class="btn primary" id="last" style="margin-top:20px">К последнему вопросу</button></section>'
+      '</section>'
     );
     requestAnimationFrame(function () {
       requestAnimationFrame(function () {
         Array.prototype.forEach.call(stage.querySelectorAll('.mfill'), function (m) { m.style.width = m.dataset.w + '%'; });
       });
     });
-    Array.prototype.forEach.call(stage.querySelectorAll('.coupon .btn'), function (b) {
+    var couponButtons = Array.prototype.slice.call(stage.querySelectorAll('.coupon .btn'));
+    couponButtons.forEach(function (b) {
       b.onclick = function () {
-        b.parentNode.classList.add('used');
-        b.textContent = 'Активирован';
-        b.disabled = true;
+        couponButtons.forEach(function (other) {
+          other.disabled = true;
+          if (other === b) {
+            other.parentNode.classList.add('used');
+            other.textContent = 'Выбран';
+          } else {
+            other.textContent = 'Не выбран';
+          }
+        });
+        var note = document.createElement('p');
+        note.className = 'hint';
+        note.textContent = 'Можно выбрать только один купон.';
+        var couponSection = b.closest('.ticket');
+        if (couponSection && !couponSection.querySelector('.coupon-note')) {
+          note.className += ' coupon-note';
+          couponSection.appendChild(note);
+        }
       };
     });
-    $('last').onclick = finalQuestion;
   }
 
-  function finalQuestion() {
-    duel({
-      q: CONFIG.finalQuestion, yes: 'Да',
-      nos: ['Нет', 'Подумай ещё', 'Я приготовлю ужин', 'Там будет десерт', 'Ну пожалуйста', 'Я угощаю'],
-      cap: 'Последний вопрос. Честно.', gone: 'Кнопка «Нет» ушла в отпуск. Остался один вариант.',
-      html: function (inner) { return ticket('Последний вопрос', 'Финал', 'ответь', inner); },
-      onYes: ending
-    });
-  }
 
   function heartPath(ctx, x, y, s) {
     ctx.beginPath();
